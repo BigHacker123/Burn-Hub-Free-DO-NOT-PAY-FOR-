@@ -1,0 +1,1783 @@
+--[[ Burn Hub FREE ]]--
+
+local Loader = Instance.new("ScreenGui")
+local MainTab = Instance.new("Frame")
+local Tab = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local LoadingLine = Instance.new("Frame")
+local TextLabel_2 = Instance.new("TextLabel")
+local TextLabel_3 = Instance.new("TextLabel")
+ 
+Loader.Name = "Loader"
+Loader.Parent = game.CoreGui
+Loader.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+MainTab.Name = "MainTab"
+MainTab.Parent = Loader
+MainTab.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
+MainTab.BackgroundTransparency = 0.25
+MainTab.BorderSizePixel = 0
+MainTab.Position = UDim2.new(0.345984101, 0, 0.302973986, 0)
+MainTab.Size = UDim2.new(0, 348, 0, 154)
+MainTab.Draggable = true
+MainTab.Active = true
+MainTab.Selectable = true
+
+Tab.Name = "Tab"
+Tab.Parent = MainTab
+Tab.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
+Tab.BackgroundTransparency = 0.44999998807907104
+Tab.BorderSizePixel = 0
+Tab.Size = UDim2.new(0, 348, 0, 24)
+
+TextLabel.Parent = MainTab
+TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+TextLabel.BackgroundTransparency = 1
+TextLabel.Position = UDim2.new(0.212643683, 0, 0, 0)
+TextLabel.Size = UDim2.new(0, 200, 0, 24)
+TextLabel.Font = Enum.Font.Gotham
+TextLabel.Text = "Burn Hub - Loader"
+TextLabel.TextColor3 = Color3.new(1, 1, 1)
+TextLabel.TextSize = 14
+
+LoadingLine.Name = "LoadingLine"
+LoadingLine.Parent = MainTab
+LoadingLine.BackgroundColor3 = Color3.new(255,215,0)
+LoadingLine.BackgroundTransparency = 0.44999998807907104
+LoadingLine.BorderSizePixel = 0
+LoadingLine.Position = UDim2.new(0, 0, 0.966981113, 0)
+LoadingLine.Size = UDim2.new(0, 21, 0, 7)
+
+TextLabel_2.Parent = MainTab
+TextLabel_2.BackgroundColor3 = Color3.new(1, 1, 1)
+TextLabel_2.BackgroundTransparency = 1
+TextLabel_2.Position = UDim2.new(0.117816091, 0, 0.223964721, 0)
+TextLabel_2.Size = UDim2.new(0, 266, 0, 84)
+TextLabel_2.Font = Enum.Font.GothamBold
+TextLabel_2.Text = "Thanks for selecting Burn Hub"
+TextLabel_2.TextColor3 = Color3.new(1, 1, 1)
+TextLabel_2.TextSize = 14
+TextLabel_2.TextTransparency = 0.27000001072883606
+
+TextLabel_3.Parent = MainTab
+TextLabel_3.BackgroundColor3 = Color3.new(1, 1, 1)
+TextLabel_3.BackgroundTransparency = 1
+TextLabel_3.Position = UDim2.new(0.0603448264, 0, 0.312423438, 0)
+TextLabel_3.Size = UDim2.new(0, 236, 0, 81)
+TextLabel_3.Font = Enum.Font.GothamBold
+TextLabel_3.Text = "We are the best hub out :)"
+TextLabel_3.TextColor3 = Color3.new(1, 1, 1)
+TextLabel_3.TextSize = 11
+TextLabel_3.TextTransparency = 0.27000001072883606
+
+wait(1)
+LoadingLine:TweenSize(UDim2.new(0, 50, 0, 7))
+wait(1)
+LoadingLine:TweenSize(UDim2.new(0, 100, 0, 7))
+wait(1)
+LoadingLine:TweenSize(UDim2.new(0, 150, 0, 7))
+wait(1)
+LoadingLine:TweenSize(UDim2.new(0, 200, 0, 7))
+wait(1)
+LoadingLine:TweenSize(UDim2.new(0, 250, 0, 7))
+wait(1)
+LoadingLine:TweenSize(UDim2.new(0, 300, 0, 7))
+wait(1)
+LoadingLine:TweenSize(UDim2.new(0, 348, 0, 7))
+wait(1)
+TextLabel_2.Text = "Loaded! Welcome, "..game:GetService("Players").LocalPlayer.DisplayName
+TextLabel_3:Destroy()
+wait(3.5)
+Loader:Destroy()
+
+local loadnewplayer_upvalue = getupvalue(getrenv()._G.Player.LoadNewPlayer, 2);
+local stored_chars = {};
+
+for _, v in pairs(loadnewplayer_upvalue) do
+    if game:GetService("Players"):FindFirstChild(v.name) then
+        stored_chars[game:GetService("Players"):FindFirstChild(v.name)] = v.model
+    end
+end
+setmetatable(loadnewplayer_upvalue, {
+    __newindex = function(Self, Property, Value)
+        if Value.model then
+            if game:GetService("Players"):FindFirstChild(Value.name) then
+                stored_chars[game:GetService("Players"):FindFirstChild(Value.name)] = Value.model
+            end
+        end
+        rawset(Self, Property, Value)
+    end
+})
+
+local hook_mouse = game.Players.LocalPlayer:GetMouse()
+
+local __index; __index = hookmetamethod(game, "__index", function(self, prop)
+    if checkcaller() then 
+        if self:IsA("Player") and prop == "Character" and getcallingscript() == nil then
+            return stored_chars[self];
+        end;
+    end;
+
+    return __index(self, prop)
+end)
+
+--// Macros
+if not LPH_OBFUSCATED then
+    LPH_JIT = function(...) return ... end
+    LPH_JIT_MAX = function(...) return ... end
+    LPH_JIT_ULTRA = function(...) return ... end
+    LPH_NO_VIRTUALIZE = function(...) return ... end
+    LPH_NO_UPVALUES = function(f) return(function(...) return f(...) end) end
+    LPH_ENCSTR = function(...) return ... end
+    LPH_STRENC = function(...) return ... end
+    LPH_HOOK_FIX = function(...) return ... end
+    LPH_CRASH = function() return print(debug.traceback()) end
+end;
+
+--// Load Libraries
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/Library.lua'))()
+local SaveManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/DemoExists/LinoriaLib/main/addons/SaveManager.lua'))()
+local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/addons/ThemeManager.lua'))()
+local ESPLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/DemoExists/Oblivity-2.0/main/Modules/ESP.lua"))()
+
+local executedTimer = tick()
+
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "🔥 Burn Hub 🔥 | Trident",
+        Text = ("Took %s seconds to load the script\n"):format(math.round((tick() - executedTimer) *10^3) * 10^-3)
+    })
+
+wait(0)Library:Notify("Welcome 👋")
+wait(0)Library:Notify("🔥 Burn Hub Loaded 🔥")
+
+local old
+local a = require(game:GetService("Players").LocalPlayer.PlayerGui.Client.Camera)
+local norecoil = false
+local WallHackOn = false
+local TreeRemOn = false
+local LeavesRemover = false
+local HeadExtends = false
+local gmt = getrawmetatable(game)
+setreadonly(gmt, false)
+local oldindex = gmt.__index
+local Players = game:GetService("Players");
+local LocalPlayer = Players.LocalPlayer;
+local Mouse = LocalPlayer:GetMouse();
+local Cameras = game:GetService("Workspace").Camera;
+local CurrentCamera = game:GetService("Workspace").CurrentCamera
+local worldToViewportPoint = CurrentCamera.worldToViewportPoint
+local HeadOff = Vector3.new(0, 0.5, 0)
+local LegOff = Vector3.new(0,3,0)
+local XRTransparency = 0.9
+local _Character = getrenv()._G.Character;
+local SoundService = game:GetService("SoundService")
+
+--// Utility
+local utility = {
+    services = {
+        players = game:GetService("Players"),
+        workspace = game:GetService("Workspace"),
+        userinputservice = game:GetService("UserInputService"),
+        runservice = game:GetService("RunService"),
+        httpservice = game:GetService("HttpService"),
+        coregui = game:GetService("CoreGui"),
+        lighting = game:GetService("Lighting"),
+        guiservice = game:GetService("GuiService"),
+        replicatedstorage = game:GetService("ReplicatedStorage")
+    },
+    functions = {},
+}
+
+--// Variables
+local localplayer = utility.services.players.LocalPlayer
+local camera = utility.services.workspace.CurrentCamera
+local mouse = localplayer:GetMouse()
+
+--// Localisation
+local drawing_new = Drawing.new
+local color3_new, color3_fromrgb = Color3.new, Color3.fromRGB
+local vector3_new, vector2_new = Vector3.new, Vector2.new
+local math_huge, math_floor, math_ceil = math.huge, math.floor, math.ceil
+local getguiinset = utility.services.guiservice.GetGuiInset
+local ray_new = Ray.new
+
+--// Create UI
+    local Window = Library:CreateWindow({
+      Title = '🔥 Burn Hub Free 🔥 | Trident (Do Not Pay)',
+      Center = true,
+      AutoShow = true,
+    })
+
+    local Tabs = {
+      VisualsTab = Window:AddTab('Visuals'),
+      CombatMiscTab = Window:AddTab('Combat & Misc'),
+      UISettings = Window:AddTab('UI Settings'),
+    }
+
+ --// Snapline
+ local Snapline_Object = drawing_new("Line")
+ Snapline_Object.Visible = false
+ Snapline_Object.Thickness = 1
+ Snapline_Object.Transparency = 1
+ Snapline_Object.From = vector2_new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+ Snapline_Object.To = vector2_new(camera.ViewportSize.X /  2, camera.ViewportSize.Y / 2)
+ Snapline_Object.Color = color3_fromrgb(255, 255, 255)
+
+do
+    --// Create Sections & Features
+    do
+        --// Visuals Tab
+        do
+            --// Player ESP
+            do
+                local VisualsTabBox = Tabs.VisualsTab:AddLeftTabbox('Player Visuals')
+                local PlayerESPTab = VisualsTabBox:AddTab('Player ESP')
+                local GameESPTab = VisualsTabBox:AddTab("Game Esp")
+                
+                local ChamsTabBox = Tabs.VisualsTab:AddRightTabbox('Chams')
+                local ChamsTab = ChamsTabBox:AddTab('Chams')
+
+                --// Player ESP
+                do
+                    PlayerESPTab:AddToggle('PlayerESP_Toggle', {Text = 'Toggle', Default = false}):OnChanged(function()
+                        esp.enabled = Toggles.PlayerESP_Toggle.Value
+                    end)
+                
+                    --//Name ESP
+                    do
+                        PlayerESPTab:AddToggle('PlayerESP_NameToggle', {Text = 'Name', Default = false}):AddColorPicker("PlayerESP_NameColor", {Default = Color3.fromRGB(255, 255, 255)}):OnChanged(function()
+                            esp.settings.name.enabled = Toggles.PlayerESP_NameToggle.Value
+                        end)
+                    
+                        Options.PlayerESP_NameColor:OnChanged(function()
+                            esp.settings.name.color = Options.PlayerESP_NameColor.Value
+                        end)
+                    end
+                
+                    --//Box ESP
+                    do
+                        PlayerESPTab:AddToggle('PlayerESP_BoxToggle', {Text = 'Box', Default = false}):AddColorPicker("PlayerESP_BoxColor", {Default = Color3.fromRGB(255, 255, 255)}):OnChanged(function()
+                            esp.settings.box.enabled = Toggles.PlayerESP_BoxToggle.Value
+                        end)
+
+                        Options.PlayerESP_BoxColor:OnChanged(function()
+                            esp.settings.box.color = Options.PlayerESP_BoxColor.Value
+                        end)
+                    end
+                    
+                    --//Filled Box ESP
+                    do
+                        PlayerESPTab:AddToggle('PlayerESP_FilledBoxToggle', {Text = 'Filled Box', Default = false}):AddColorPicker("PlayerESP_FilledBoxColor", {Default = Color3.fromRGB(255, 255, 255)}):OnChanged(function()
+                            esp.settings.filledbox.enabled = Toggles.PlayerESP_FilledBoxToggle.Value
+                        end)
+
+                        Options.PlayerESP_FilledBoxColor:OnChanged(function()
+                            esp.settings.filledbox.color = Options.PlayerESP_FilledBoxColor.Value
+                            print("yes")
+                        end)
+
+                        PlayerESPTab:AddSlider('PlayerESP_FilledBoxTransparency', {Text = 'fill transparency', Default = 1, Min = 0, Max = 1, Rounding = 2, Compact = true}):OnChanged(function()
+                            esp.settings.filledbox.transparency = Options.PlayerESP_FilledBoxTransparency.Value
+                        end)
+                    end
+                
+                    --//Health ESP
+                    do
+                        --// Health Bar
+                    
+                        PlayerESPTab:AddToggle('PlayerESP_HealthBarToggle', {Text = 'Health Bar', Default = false}):OnChanged(function()
+                            esp.settings.healthbar.enabled = Toggles.PlayerESP_HealthBarToggle.Value
+                        end)
+                    
+                        --// Health Text
+                    
+                        PlayerESPTab:AddToggle('PlayerESP_HealthTextToggle', {Text = 'Health Text', Default = false}):AddColorPicker("PlayerESP_HealthTextColor", {Default = Color3.fromRGB(255, 255, 255)}):OnChanged(function()
+                            esp.settings.healthtext.enabled = Toggles.PlayerESP_HealthTextToggle.Value
+                        end)
+
+                        Options.PlayerESP_HealthTextColor:OnChanged(function()
+                            esp.settings.healthtext.color = Options.PlayerESP_HealthTextColor.Value
+                        end)
+                    end
+                
+                    --//View Angle ESP
+                    do
+                        PlayerESPTab:AddToggle('PlayerESP_ViewAngleToggle', {Text = 'View Angle', Default = false}):AddColorPicker("PlayerESP_ViewAngleColor", {Default = Color3.fromRGB(255, 255, 255)}):OnChanged(function()
+                            esp.settings.viewangle.enabled = Toggles.PlayerESP_ViewAngleToggle.Value
+                        end)
+
+                        Options.PlayerESP_ViewAngleColor:OnChanged(function()
+                            esp.settings.viewangle.color = Options.PlayerESP_ViewAngleColor.Value
+                        end)
+                    end
+                
+                    PlayerESPTab:AddDivider()
+                
+                    --// Settings
+                    do
+                        PlayerESPTab:AddToggle('PlayerESP_DisplayNames', {Text = 'Display Names', Default = false}):OnChanged(function()
+                            esp.settings.name.displaynames = Toggles.PlayerESP_DisplayNames.Value
+                        end)
+                    
+                        PlayerESPTab:AddToggle('PlayerESP_Outlines', {Text = 'Outlines', Default = false}):OnChanged(function()
+                            for i,v in pairs(esp.settings) do
+                                v.outline = Toggles.PlayerESP_Outlines.Value
+                            end
+                        end)
+                    
+                        PlayerESPTab:AddToggle('PlayerESP_HideFriendlies', {Text = 'Hide Teammates', Default = false}):OnChanged(function()
+                            esp.teamcheck = Toggles.PlayerESP_HideFriendlies.Value
+                        end)
+                    
+                        PlayerESPTab:AddSlider('PlayerESP_FontSize', {Text = 'Font Size', Default = 13, Min = 0, Max = 100, Rounding = 0, Compact = false}):OnChanged(function()
+                            esp.fontsize = Options.PlayerESP_FontSize.Value
+                        end)
+                    
+                        PlayerESPTab:AddDropdown('PlayerESP_FontFamily', {Values = { 'UI', 'System', 'Plex', 'Monospace' }, Default = 3, Multi = false, Text = 'Font Family'}):OnChanged(function()
+                            if Options.PlayerESP_FontFamily.Value == "UI" then
+                                esp.font = 0
+                            elseif Options.PlayerESP_FontFamily.Value == "System" then
+                                esp.font = 1
+                            elseif Options.PlayerESP_FontFamily.Value == "Plex" then
+                                esp.font = 2
+                            elseif Options.PlayerESP_FontFamily.Value == "Monospace" then
+                                esp.font = 3
+                            end
+                        end)
+                    
+                        PlayerESPTab:AddSlider('PlayerESP_HealthBarSize', {Text = 'Health Bar Size', Default = 3, Min = 1, Max = 5, Rounding = 0, Compact = false}):OnChanged(function()
+                            esp.settings.healthbar.size = Options.PlayerESP_HealthBarSize.Value
+                        end)
+                    end
+                end
+                
+                --// Visuals // Game Esp
+
+    GameESPTab:AddToggle('WorldESP_Toggle', {Text = 'Toggle', Default = false}):OnChanged(function()
+
+    end)
+
+    GameESPTab:AddSlider('WorldESP_MaxDistance', {Text = 'Max Dist:', Default = 1000, Min = 50, Max = 5000, Rounding = 0, Compact = false}):OnChanged(function()
+
+    end)
+
+    GameESPTab:AddToggle('MyClaimstone', {
+      Text = 'Claimstone',
+      Default = true,
+      Tooltip = 'This is a tooltip',
+    })
+
+    function WTS(part)
+      local screen = workspace.CurrentCamera:WorldToViewportPoint(part.Position)
+      return Vector2.new(screen.x, screen.y)
+    end
+
+    function ESPText(part)
+      local name = Drawing.new("Text")
+      name.Text = "Claimstone"
+      name.Color = Color3.new(255,255,0)
+      name.Position = WTS(part)
+      name.Size = 11.0
+      name.Outline = true
+      name.Center = false
+      name.Visible = true
+
+      game:GetService("RunService").Stepped:connect(function()
+      pcall(function()
+      local destroyed = not part:IsDescendantOf(game.Workspace)
+      if destroyed and name ~= nil then
+        name:Remove()
+      end
+      if part ~= nil then
+        name.Position = WTS(part)
+      end
+      local _, screen = workspace.CurrentCamera:WorldToViewportPoint(part.Position)
+      if screen and Names then
+        name.Visible = true
+      else
+        name.Visible = false
+      end
+
+      end)
+      end)
+    end
+
+    for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+      if v.Name == "State" and v.Parent.Name == "Model" then
+        ESPText(v)
+      end
+    end
+    game.Workspace.DescendantAdded:Connect(function(v)
+    if v.Name == "State" and v.Parent.Name == "Model" then
+      ESPText(v)
+    end
+    end)
+
+    Toggles.MyClaimstone:OnChanged(function()
+    Names = Toggles.MyClaimstone.Value
+    end)
+    
+    Toggles.MyClaimstone:SetValue(false)
+
+    GameESPTab:AddToggle('ToolESP_Toggle', {Text = 'Tool', Default = false}):OnChanged(function(ToolEnabled)
+    if ToolEnabled == true then
+      while ToolEnabled do
+        wait(1)
+        local function CreateEsp(name,text,P)
+          local ESP = Instance.new("BillboardGui")
+          local EspText = Instance.new("TextLabel")
+
+          ESP.Name = name
+          ESP.Parent = P
+          ESP.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+          ESP.Active = true
+          ESP.AlwaysOnTop = true
+          ESP.LightInfluence = 1.000
+          ESP.Size = UDim2.new(0, 200, 0, 50)
+          ESP.SizeOffset = Vector2.new(0, 0.3)
+          ESP.Adornee = P
+
+          EspText.Name = "EspText"
+          EspText.Parent = ESP
+          EspText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+          EspText.BackgroundTransparency = 1.000
+          EspText.Size = UDim2.new(0, 200, 0, 50)
+          EspText.Font = Enum.Font.SourceSans
+          EspText.Text = text
+          EspText.TextColor3 = Color3.fromRGB(255, 0, 0)
+          EspText.TextSize = 10.0
+          EspText.TextWrapped = true
+        end
+
+        -- part to loop --
+        while true do
+          wait()
+          for _,v in pairs(game:GetService("Workspace").Ignore:GetChildren()) do
+            if game:GetService("ReplicatedStorage").HandModels:FindFirstChild(v.Name) then
+              if v:FindFirstChild("Handle") then
+                if not v.Handle:FindFirstChild("ESP") then
+                  CreateEsp("ESP",v.Name,v.Handle)
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    end)
+    
+    GameESPTab:AddToggle('WorldESP_Toggle', {Text = 'Military Crate', Default = false}):OnChanged(function()
+        
+        print("Here")
+        
+    end)
+    
+    -- Ore esp ETC
+
+    GameESPTab:AddToggle('EspIron', {
+    Text = 'Iron Ore',
+    Default = false,
+    Tooltip = 'Iron Ore Esp', 
+})
+
+GameESPTab:AddToggle('espnitr', {
+    Text = 'Nitrate Ore',
+    Default = false, -- Default value (true / false)
+    Tooltip = 'Nitrate Ore Esp', 
+})
+
+GameESPTab:AddToggle('EspStone', {
+    Text = 'Stone Ore',
+    Default = false,
+    Tooltip = 'Stone Ore Esp', 
+})
+
+GameESPTab:AddDivider()
+
+GameESPTab:AddSlider('EspDelay_MaxDistance', {Text = 'Esp Delay (ms)', Default = 100, Min = 0, Max = 1000, Rounding = 0, Compact = false}):OnChanged(function()
+        
+        print("Here")
+
+    end)
+
+GameESPTab:AddSlider('EspGraphics_MaxDistance', {Text = 'Esp Graphics', Default = 50, Min = 0, Max = 100, Rounding = 0, Compact = false}):OnChanged(function()
+        
+        print("Here")
+
+    end)
+            
+                --// Player Chams
+                do
+                    ChamsTab:AddToggle('Chams_Toggle', {Text = 'Toggle', Default = false}):AddColorPicker("Chams_FillColor", {Default = Color3.fromRGB(255, 255, 255), Tooltip = "Fill"}):AddColorPicker("Chams_OutlineColor", {Default = Color3.fromRGB(0, 0, 0), Tooltip = "Outline"}):OnChanged(function()
+                        esp.settings_chams.enabled = Toggles.Chams_Toggle.Value
+                    end)
+                
+                    Options.Chams_FillColor:OnChanged(function()
+                        esp.settings_chams.fill_color = Options.Chams_FillColor.Value
+                    end)
+                    Options.Chams_OutlineColor:OnChanged(function()
+                        esp.settings_chams.outline_color = Options.Chams_OutlineColor.Value
+                    end)
+                
+                    ChamsTab:AddDivider()
+                
+                    ChamsTab:AddToggle('Chams_Outline', {Text = 'Outline', Default = false}):OnChanged(function()
+                        esp.settings_chams.outline = Toggles.Chams_Outline.Value
+                    end)
+                    ChamsTab:AddToggle('Chams_HideFriendlies', {Text = 'Hide Teammates', Default = false}):OnChanged(function()
+                        esp.settings_chams.teamcheck = Toggles.Chams_HideFriendlies.Value
+                    end)
+                
+                    ChamsTab:AddSlider('Chams_FillTransparency', {Text = 'Fill Transparency', Default = esp.settings_chams.fill_transparency, Min = 0, Max = 1, Rounding = 2, Compact = false}):OnChanged(function()
+                        esp.settings_chams.fill_transparency = Options.Chams_FillTransparency.Value
+                    end)
+                
+                    ChamsTab:AddSlider('Chams_OutlineTransparency', {Text = 'Outline Transparency', Default = esp.settings_chams.fill_transparency, Min = 0, Max = 1, Rounding = 2, Compact = false}):OnChanged(function()
+                        esp.settings_chams.outline_transparency = Options.Chams_OutlineTransparency.Value
+                    end)
+                end
+            end
+
+            --// Other Drawing Objects
+            do
+                local OtherDrawingObjectsTabBox = Tabs.VisualsTab:AddRightTabbox('Other Drawing Objects')
+                local FOVCircleTab = OtherDrawingObjectsTabBox:AddTab('FOV Circle')
+                local CrosshairTab = OtherDrawingObjectsTabBox:AddTab('Crosshair')
+                local SnaplineTab = OtherDrawingObjectsTabBox:AddTab('Snapline')
+                
+                do
+                    do
+                        SnaplineTab:AddToggle('Snapline_Toggle', {Text = 'Toggle', Default = false}):AddColorPicker("Snapline_Color", {Default = Color3.fromRGB(255, 255, 255)}):OnChanged(function()
+                            Snapline_Object.Visible = Toggles.Snapline_Toggle.Value
+                        end)
+                    
+                        Options.Snapline_Color:OnChanged(function()
+                            Snapline_Object.Color = Options.Snapline_Color.Value
+                        end)
+                    
+                        SnaplineTab:AddSlider('Snapline_Thickness', {Text = 'Thickness', Default = 1, Min = 0.5, Max = 5, Rounding = 1, Compact = false}):OnChanged(function()
+                            Snapline_Object.Thickness = Options.Snapline_Thickness.Value
+                        end)
+                    
+                        SnaplineTab:AddSlider('Snapline_Transparency', {Text = 'Transparency', Default = 1, Min = 0, Max = 1, Rounding = 2, Compact = false}):OnChanged(function()
+                            Snapline_Object.Transparency = Options.Snapline_Transparency.Value
+                        end)
+                    
+                        SnaplineTab:AddDropdown('Snapline_TargetPart', {Values = { 'Head', 'HumanoidRootPart' }, Default = 1, Multi = false, Text = 'Snap To'})
+                    end
+                
+                    --// Crosshair
+                    local Crosshair_Horizontal = drawing_new("Line")
+                    Crosshair_Horizontal.Visible = false
+                    Crosshair_Horizontal.Thickness = 1
+                    Crosshair_Horizontal.Transparency = 1
+                    Crosshair_Horizontal.From = vector2_new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+                    Crosshair_Horizontal.To = vector2_new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+                    Crosshair_Horizontal.Color = color3_fromrgb(255, 255, 255)
+                    
+                    local Crosshair_Vertical = drawing_new("Line")
+                    Crosshair_Vertical.Visible = false
+                    Crosshair_Vertical.Thickness = 1
+                    Crosshair_Vertical.Transparency = 1
+                    Crosshair_Vertical.From = vector2_new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+                    Crosshair_Vertical.To = vector2_new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+                    Crosshair_Vertical.Color = color3_fromrgb(255, 255, 255)
+                    do
+                        CrosshairTab:AddToggle('Crosshair_Toggle', {Text = 'Toggle', Default = false}):AddColorPicker("Crosshair_Color", {Default = Color3.fromRGB(255, 255, 255)}):OnChanged(function()
+                            Crosshair_Horizontal.Visible = Toggles.Crosshair_Toggle.Value
+                            Crosshair_Vertical.Visible = Toggles.Crosshair_Toggle.Value
+                        end)
+                    
+                        Options.Crosshair_Color:OnChanged(function()
+                            Crosshair_Horizontal.Color = Options.Crosshair_Color.Value
+                            Crosshair_Vertical.Color = Options.Crosshair_Color.Value
+                        end)
+                    
+                        CrosshairTab:AddSlider('Crosshair_Size', {Text = 'Size', Default = 10, Min = 0, Max = 100, Rounding = 1, Compact = false}):OnChanged(function()
+                            Crosshair_Horizontal.From = vector2_new(camera.ViewportSize.X / 2 - Options.Crosshair_Size.Value, camera.ViewportSize.Y / 2)
+                            Crosshair_Horizontal.To = vector2_new(camera.ViewportSize.X / 2 + Options.Crosshair_Size.Value, camera.ViewportSize.Y / 2)
+                            Crosshair_Vertical.From = vector2_new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2 - Options.Crosshair_Size.Value)
+                            Crosshair_Vertical.To = vector2_new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2 + Options.Crosshair_Size.Value)
+                        end)
+                
+                        CrosshairTab:AddSlider('Crosshair_Thickness', {Text = 'Thickness', Default = 1, Min = 0.5, Max = 5, Rounding = 1, Compact = false}):OnChanged(function()
+                            Crosshair_Horizontal.Thickness = Options.Crosshair_Thickness.Value
+                            Crosshair_Vertical.Thickness = Options.Crosshair_Thickness.Value  
+                        end)
+                    
+                        CrosshairTab:AddSlider('Crosshair_Transparency', {Text = 'Transparency', Default = 1, Min = 0, Max = 1, Rounding = 2, Compact = false}):OnChanged(function()
+                            Crosshair_Horizontal.Transparency = Options.Crosshair_Transparency.Value
+                            Crosshair_Vertical.Transparency = Options.Crosshair_Transparency.Value
+                        end)
+                    end
+                
+                    --// FOV Circle
+                    local FOVCircle_Object = drawing_new("Circle")
+                    FOVCircle_Object.Visible = false
+                    FOVCircle_Object.Color = color3_fromrgb(255, 255, 255)
+                    FOVCircle_Object.Radius = 100
+                    FOVCircle_Object.Thickness = 1
+                    FOVCircle_Object.Filled = false
+                    FOVCircle_Object.Transparency = 1
+                    FOVCircle_Object.Position = vector2_new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+                    do
+                        FOVCircleTab:AddToggle('FOVCircle_Toggle', {Text = 'Toggle', Default = false}):AddColorPicker("FOVCircle_Color", {Default = Color3.fromRGB(255, 255, 255)}):OnChanged(function()
+                            FOVCircle_Object.Visible = Toggles.FOVCircle_Toggle.Value
+                        end)
+                    
+                        Options.FOVCircle_Color:OnChanged(function()
+                            FOVCircle_Object.Color = Options.FOVCircle_Color.Value
+                        end)
+                
+                        FOVCircleTab:AddToggle('FOVCircle_Filled', {Text = 'Filled', Default = false}):OnChanged(function()
+                            FOVCircle_Object.Filled = Toggles.FOVCircle_Filled.Value
+                        end)
+                    
+                        FOVCircleTab:AddSlider('FOVCircle_Radius', {Text = 'Radius', Default = 100, Min = 0, Max = 750, Rounding = 0, Compact = false}):OnChanged(function()
+                            FOVCircle_Object.Radius = Options.FOVCircle_Radius.Value
+                        end)
+                
+                        FOVCircleTab:AddSlider('FOVCircle_Thickness', {Text = 'Thickness', Default = 1, Min = 0.5, Max = 5, Rounding = 1, Compact = false}):OnChanged(function()
+                            FOVCircle_Object.Thickness = Options.FOVCircle_Thickness.Value
+                        end)
+                    
+                        FOVCircleTab:AddSlider('FOVCircle_Transparency', {Text = 'Transparency', Default = 1, Min = 0, Max = 1, Rounding = 2, Compact = false}):OnChanged(function()
+                            FOVCircle_Object.Transparency = Options.FOVCircle_Transparency.Value
+                        end)
+                
+                        FOVCircleTab:AddSlider('FOVCircle_NumSides', {Text = 'Num Sides', Default = 0, Min = 0, Max = 50, Rounding = 0, Compact = false}):OnChanged(function()
+                            FOVCircle_Object.NumSides = Options.FOVCircle_NumSides.Value
+                        end)
+                    end
+                end
+                
+                
+                --| World Lighting Main |--
+
+    local WorldLightingTabBox = Tabs.VisualsTab:AddLeftTabbox('World & Game Visuals')
+    local WorldTab = WorldLightingTabBox:AddTab('World')
+    local GameVisualsTab = WorldLightingTabBox:AddTab('Game')
+
+    --// World
+
+    WorldTab:AddToggle('World_Shadows', {Text = 'Global Shadows', Default = utility.services.lighting.GlobalShadows}):OnChanged(function()
+    utility.services.lighting.GlobalShadows = Toggles.World_Shadows.Value
+    end)
+
+    WorldTab:AddToggle('World_Grass', {Text = 'Show Grass', Default = utility.services.lighting.GlobalShadows}):OnChanged(function()
+    sethiddenproperty(utility.services.workspace.Terrain, "Decoration", Toggles.World_Grass.Value)
+    end)
+
+    if utility.services.workspace.Terrain:FindFirstChild("Clouds") then
+      WorldTab:AddToggle('World_Clouds', {Text = 'Show Clouds', Default = utility.services.workspace.Terrain.Clouds.Enabled}):OnChanged(function()
+      utility.services.workspace.Terrain.Clouds.Enabled = Toggles.World_Clouds.Value
+      end)
+      
+      WorldTab:AddButton('Leavs Remover', function()
+          if LeavesRemover == false then
+            LeavesRemover = true
+            while LeavesRemover == true do
+              for v, i in pairs(game:GetService("Workspace"):GetChildren()) do
+                if i:FindFirstChild("Part") then
+                  if i:FindFirstChild("top") then
+                    i.top:Remove()
+                  else
+                    for x,b in pairs(i:GetChildren()) do
+                      if b.ClassName == "MeshPart" and b.MeshId == "rbxassetid://743205322" then
+                        b:Remove()
+                      end
+                    end
+                  end
+                end
+              end
+              wait(1)
+            end
+          else
+            LeavesRemover = false
+          end
+          end)
+
+          GameVisualsTab:AddLabel('X-Ray'):AddKeyPicker('XRKB', {
+            Default = 'T',
+            SyncToggleState = false,
+            Mode = 'Toggle',
+            Text = 'X-Ray',
+            NoUI = false,
+          })
+          Options.XRKB:OnClick(function()
+          if WallHackOn == false then
+            WallHackOn = true
+            for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+              if v:FindFirstChild("Hitbox") then
+                v.Hitbox.Transparency = XRTransparency
+              end
+            end
+          else
+            WallHackOn = false
+            for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+              if v:FindFirstChild("Hitbox") then
+                v.Hitbox.Transparency = 0
+              end
+            end
+          end
+          end)
+          
+GameVisualsTab:AddToggle('DoorXray_Toggle', {Text = 'Door XRay', Default = false}):OnChanged(function(Value)
+    XRayToggle = Value
+    for XRay ,v in pairs(game.Workspace:GetDescendants()) do
+        if v.Name == "Wall" or v.Name == "WEAKSIDE" or v.Name == "Roof" then
+            if XRayToggle then
+                v.Transparency = XRayTransparency
+            else
+                v.Transparency = 0
+            end
+        end
+    end
+end)
+
+GameVisualsTab:AddSlider('Xray_Transparency', {Text = 'Transparency', Default = 0.3, Min = 0, Max = 1, Rounding = 1, Compact = true}):OnChanged(function(Value)
+    XRayTransparency = Value
+    for Xray ,v in pairs(game.Workspace:GetDescendants()) do
+        if v.Name == "Wall" or v.Name == "WEAKSIDE" or v.Name == "Roof" then
+            if XRayToggle then
+                v.Transparency = XRayTransparency
+            else
+                v.Transparency = 0
+            end
+        end
+    end
+end) 
+
+--| Arm Vis Tabs |--
+
+                local ArmVisTabBox = Tabs.VisualsTab:AddRightTabbox('Arm Visuals')
+                local ArmVisTab = ArmVisTabBox:AddTab('Arm Visuals')
+                local GunVisTab = ArmVisTabBox:AddTab('Gun Visuals')
+
+                --// Arm Visuals
+
+                ArmVisTab:AddButton('Set Default Color', function()
+                game:GetService("Workspace").Ignore.FPSArms.RightUpperArm.BrickColor = BrickColor.new("Linen")
+                game:GetService("Workspace").Ignore.FPSArms.RightLowerArm.BrickColor = BrickColor.new("Linen")
+                game:GetService("Workspace").Ignore.FPSArms.RightHand.BrickColor = BrickColor.new("Linen")
+                game:GetService("Workspace").Ignore.FPSArms.LeftUpperArm.BrickColor = BrickColor.new("Linen")
+                game:GetService("Workspace").Ignore.FPSArms.LeftLowerArm.BrickColor = BrickColor.new("Linen")
+                game:GetService("Workspace").Ignore.FPSArms.LeftHand.BrickColor = BrickColor.new("Linen")
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Handle.BrickColor = BrickColor.new("Cool yellow")
+                end)
+
+                ArmVisTab:AddLabel('Color'):AddColorPicker('ARCCCC', {
+                  Default = Color3.new(1, 0.650980, 0),
+                  Title = 'Arms Color',
+                })
+
+                Options.ARCCCC:OnChanged(function(ARMC)
+                game:GetService("Workspace").Ignore.FPSArms.RightUpperArm.Color = ARMC
+                game:GetService("Workspace").Ignore.FPSArms.RightLowerArm.Color = ARMC
+                game:GetService("Workspace").Ignore.FPSArms.RightHand.Color = ARMC
+                game:GetService("Workspace").Ignore.FPSArms.LeftUpperArm.Color = ARMC
+                game:GetService("Workspace").Ignore.FPSArms.LeftLowerArm.Color = ARMC
+                game:GetService("Workspace").Ignore.FPSArms.LeftHand.Color = ARMC
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Handle.Color = ARMC
+                end)
+
+                ArmVisTab:AddDropdown('MaterialD', {
+                  Values = { 'Default', 'ForceField', 'Neon', 'CrackedLava' },
+                  Default = 1,
+                  Multi = false,
+                  Text = 'Material',
+                  Tooltip = 'Arms Material',
+                })
+
+                Options.MaterialD:OnChanged(function()
+                if Options.MaterialD.Value == "Default" then
+                  game:GetService("Workspace").Ignore.FPSArms.RightUpperArm.Material = "Plastic"
+                  game:GetService("Workspace").Ignore.FPSArms.RightLowerArm.Material = "Plastic"
+                  game:GetService("Workspace").Ignore.FPSArms.RightHand.Material = "Plastic"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftUpperArm.Material = "Plastic"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftLowerArm.Material = "Plastic"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftHand.Material = "Plastic"
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Handle.Material = "Plastic"
+                end
+
+                if Options.MaterialD.Value == "ForceField" then
+                  game:GetService("Workspace").Ignore.FPSArms.RightUpperArm.Material = "ForceField"
+                  game:GetService("Workspace").Ignore.FPSArms.RightLowerArm.Material = "ForceField"
+                  game:GetService("Workspace").Ignore.FPSArms.RightHand.Material = "ForceField"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftUpperArm.Material = "ForceField"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftLowerArm.Material = "ForceField"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftHand.Material = "ForceField"
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Handle.Material = "ForceField"
+                end
+
+                if Options.MaterialD.Value == "Neon" then
+                  game:GetService("Workspace").Ignore.FPSArms.RightUpperArm.Material = "Neon"
+                  game:GetService("Workspace").Ignore.FPSArms.RightLowerArm.Material = "Neon"
+                  game:GetService("Workspace").Ignore.FPSArms.RightHand.Material = "Neon"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftUpperArm.Material = "Neon"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftLowerArm.Material = "Neon"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftHand.Material = "Neon"
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Handle.Material = "Neon"
+                end
+
+                if Options.MaterialD.Value == "CrackedLava" then
+                  game:GetService("Workspace").Ignore.FPSArms.RightUpperArm.Material = "CrackedLava"
+                  game:GetService("Workspace").Ignore.FPSArms.RightLowerArm.Material = "CrackedLava"
+                  game:GetService("Workspace").Ignore.FPSArms.RightHand.Material = "CrackedLava"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftUpperArm.Material = "CrackedLava"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftLowerArm.Material = "CrackedLava"
+                  game:GetService("Workspace").Ignore.FPSArms.LeftHand.Material = "CrackedLava"
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Handle.Material = "CrackedLava"
+                end
+                end)
+
+                --// Gun Visuals
+
+                GunVisTab:AddButton('Set Color', function()
+                -----HMAR
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Barrel.BrickColor = BrickColor.new("Dark grey")
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Body.BrickColor = BrickColor.new("Dark stone grey")
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Bolt.BrickColor = BrickColor.new("Medium stonne grey")
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Stock.BrickColor = BrickColor.new("Bronze")
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Grip.BrickColor = BrickColor.new("Bronze")
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Mag.BrickColor = BrickColor.new("Dark stone grey")
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Muzzle.BrickColor = BrickColor.new("Bronze")
+                game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.ADS.BrickColor = BrickColor.new("Medium stonne grey")
+                game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.Union.BrickColor = BrickColor.new("Medium stonne grey")
+                -----PipeSMG
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.ADS.BrickColor = BrickColor.new("Medium stonne grey")
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.Union.BrickColor = BrickColor.new("Medium stonne grey")
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Mag.BrickColor = BrickColor.new("Medium stonne grey")
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Flap.BrickColor = BrickColor.new("Medium stonne grey")
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Muzzle.BrickColor = BrickColor.new("Medium stonne grey")
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Body.BrickColor = BrickColor.new("Dark stone grey")
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Bolt.BrickColor = BrickColor.new("Medium stonne grey")
+                -----USP
+                game:GetService("ReplicatedStorage").HandModels.USP.IronSights.ADS.BrickColor = BrickColor.new("Lime green")
+                game:GetService("ReplicatedStorage").HandModels.USP.IronSights.Union.BrickColor = BrickColor.new("Medium stonne grey")
+                game:GetService("ReplicatedStorage").HandModels.USP.Muzzle.BrickColor = BrickColor.new("Medium stone grey")
+                game:GetService("ReplicatedStorage").HandModels.USP.Mag.BrickColor = BrickColor.new("Medium stonne grey")
+                game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Slide"].BrickColor = BrickColor.new("Sliver flip/flop")
+                game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Body"].BrickColor = BrickColor.new("Dark stone grey")
+                -----Pipe
+                game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights.ADS.BrickColor = BrickColor.new("Dark stone grey")
+                game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights["Meshes/PipePistolSights"].BrickColor = BrickColor.new("Medium stone grey")
+                game:GetService("ReplicatedStorage").HandModels.PipePistol.Muzzle.BrickColor = BrickColor.new("Dark stone grey")
+                game:GetService("ReplicatedStorage").HandModels.PipePistol.Mag.BrickColor = BrickColor.new("Medium stone grey")
+                game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBody"].BrickColor = BrickColor.new("Dark stone grey")
+                game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBolt"].BrickColor = BrickColor.new("Medium stone grey")
+                -----Crossbow
+                game:GetService("ReplicatedStorage").HandModels.Crossbow.Arrow.BrickColor = BrickColor.new("Fawn brown")
+                game:GetService("ReplicatedStorage").HandModels.Crossbow["Meshes/Bow"].BrickColor = BrickColor.new("Medium stone grey")
+                game:GetService("ReplicatedStorage").HandModels.Crossbow.Union.BrickColor = BrickColor.new("Medium stone grey")
+                game:GetService("ReplicatedStorage").HandModels.Crossbow.Body.BrickColor = BrickColor.new("Bronze")
+                game:GetService("ReplicatedStorage").HandModels.Crossbow.Mover.BrickColor = BrickColor.new("Medium stone grey")
+                -----Bow
+                game:GetService("ReplicatedStorage").HandModels.Bow.Arrow.BrickColor = BrickColor.new("Fawn brown")
+                game:GetService("ReplicatedStorage").HandModels.Bow["Meshes/Bow"].BrickColor = BrickColor.new("Bronze")
+                game:GetService("ReplicatedStorage").HandModels.Bow.Fabric.BrickColor = BrickColor.new("Beige")
+                end)
+                --
+                GunVisTab:AddLabel('Color'):AddColorPicker('GGGCCPP', {
+                  Default = Color3.new(0, 1, 0),
+                  Title = 'Guns Color',
+                })
+
+                Options.GGGCCPP:OnChanged(function(GCS)
+                -----HMAR
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Barrel.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Body.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Bolt.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Stock.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Grip.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Mag.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.HMAR.Muzzle.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.ADS.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.Union.Color = GCS
+                -----PipeSMG
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.ADS.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.Union.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Mag.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Flap.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Muzzle.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Body.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipeSMG.Bolt.Color = GCS
+                -----USP
+                game:GetService("ReplicatedStorage").HandModels.USP.IronSights.ADS.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.USP.IronSights.Union.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.USP.Muzzle.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.USP.Mag.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Slide"].Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Body"].Color = GCS
+                -----Pipe
+                game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights.ADS.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights["Meshes/PipePistolSights"].Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipePistol.Muzzle.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipePistol.Mag.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBody"].Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBolt"].Color = GCS
+                -----Crossbow
+                game:GetService("ReplicatedStorage").HandModels.Crossbow.Arrow.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.Crossbow["Meshes/Bow"].Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.Crossbow.Union.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.Crossbow.Body.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.Crossbow.Mover.Color = GCS
+                -----Bow
+                game:GetService("ReplicatedStorage").HandModels.Bow.Arrow.Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.Bow["Meshes/Bow"].Color = GCS
+                game:GetService("ReplicatedStorage").HandModels.Bow.Fabric.Color = GCS
+                end)
+                --]]
+
+                GunVisTab:AddDropdown('GColorDrop', {
+                  Values = { 'Default', 'ForceField', 'Neon', 'CrackedLava' },
+                  Default = 1,
+                  Multi = false,
+
+                  Text = 'Guns Materials',
+                  Tooltip = 'Materials',
+                })
+                Options.GColorDrop:OnChanged(function(ggggggg1)
+                if ggggggg1 == "Default" then
+                  -----HMAR
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Barrel.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Body.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Bolt.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Stock.Material = Enum.Material.Wood
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Grip.Material = Enum.Material.Wood
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Mag.Material = Enum.Material.Plastic
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Muzzle.Material = Enum.Material.Wood
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.ADS.Material = Enum.Material.Plastic
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.Union.Material = Enum.Material.Metal
+                  -----PipeSMG
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.ADS.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.Union.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Mag.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Flap.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Muzzle.Material = Enum.Material.Plastic
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Body.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Bolt.Material = Enum.Material.Metal
+                  -----USP
+                  game:GetService("ReplicatedStorage").HandModels.USP.IronSights.ADS.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.USP.IronSights.Union.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.USP.Muzzle.Material = Enum.Material.Plastic
+                  game:GetService("ReplicatedStorage").HandModels.USP.Mag.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Slide"].Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Body"].Material = Enum.Material.Metal
+                  -----Pipe
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights.ADS.Material = Enum.Material.Plastic
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights["Meshes/PipePistolSights"].Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.Muzzle.Material = Enum.Material.Plastic
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.Mag.Material = Enum.Material.Plastic
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBody"].Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBolt"].Material = Enum.Material.Metal
+                  -----Crossbow
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Arrow.Material = Enum.Material.Wood
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow["Meshes/Bow"].Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Union.Material = Enum.Material.Metal
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Body.Material = Enum.Material.Wood
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Mover.Material = Enum.Material.CorrodedMetal
+                  -----Bow
+                  game:GetService("ReplicatedStorage").HandModels.Bow.Arrow.Material = Enum.Material.Wood
+                  game:GetService("ReplicatedStorage").HandModels.Bow["Meshes/Bow"].Material = Enum.Material.Wood
+                  game:GetService("ReplicatedStorage").HandModels.Bow.Fabric.Material = Enum.Material.Fabric
+                elseif ggggggg1 == "Force Field" then
+                  -----HMAR
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Barrel.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Body.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Bolt.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Stock.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Grip.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Mag.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Muzzle.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.ADS.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.Union.Material = Enum.Material.ForceField
+                  -----PipeSMG
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.ADS.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.Union.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Mag.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Flap.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Muzzle.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Body.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Bolt.Material = Enum.Material.ForceField
+                  -----USP
+                  game:GetService("ReplicatedStorage").HandModels.USP.IronSights.ADS.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.USP.IronSights.Union.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.USP.Muzzle.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.USP.Mag.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Slide"].Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Body"].Material = Enum.Material.ForceField
+                  -----Pipe
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights.ADS.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights["Meshes/PipePistolSights"].Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.Muzzle.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.Mag.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBody"].Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBolt"].Material = Enum.Material.ForceField
+                  -----Crossbow
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Arrow.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow["Meshes/Bow"].Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Union.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Body.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Mover.Material = Enum.Material.ForceField
+                  -----Bow
+                  game:GetService("ReplicatedStorage").HandModels.Bow.Arrow.Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.Bow["Meshes/Bow"].Material = Enum.Material.ForceField
+                  game:GetService("ReplicatedStorage").HandModels.Bow.Fabric.Material = Enum.Material.ForceField
+                elseif ggggggg1 == "Neon" then
+                  -----HMAR
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Barrel.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Body.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Bolt.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Stock.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Grip.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Mag.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Muzzle.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.ADS.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.Union.Material = Enum.Material.Neon
+                  -----PipeSMG
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.ADS.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.Union.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Mag.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Flap.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Muzzle.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Body.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Bolt.Material = Enum.Material.Neon
+                  -----USP
+                  game:GetService("ReplicatedStorage").HandModels.USP.IronSights.ADS.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.USP.IronSights.Union.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.USP.Muzzle.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.USP.Mag.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Slide"].Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Body"].Material = Enum.Material.Neon
+                  -----Pipe
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights.ADS.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights["Meshes/PipePistolSights"].Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.Muzzle.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.Mag.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBody"].Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBolt"].Material = Enum.Material.Neon
+                  -----Crossbow
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Arrow.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow["Meshes/Bow"].Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Union.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Body.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Mover.Material = Enum.Material.Neon
+                  -----Bow
+                  game:GetService("ReplicatedStorage").HandModels.Bow.Arrow.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.Bow["Meshes/Bow"].Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.Bow.Fabric.Material = Enum.Material.Neon
+                elseif ggggggg1 == "CrackedLava" then
+                  -----HMAR
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Barrel.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Body.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Bolt.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Stock.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Grip.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Mag.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.Muzzle.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.ADS.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.HMAR.IronSights.Union.Material = Enum.Material.CrackedLava
+                  -----PipeSMG
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.ADS.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.IronSights.Union.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Mag.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Flap.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Muzzle.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Body.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipeSMG.Bolt.Material = Enum.Material.CrackedLava
+                  -----USP
+                  game:GetService("ReplicatedStorage").HandModels.USP.IronSights.ADS.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.USP.IronSights.Union.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.USP.Muzzle.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.USP.Mag.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Slide"].Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.USP["Meshes/USP_Body"].Material = Enum.Material.CrackedLava
+                  -----Pipe
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights.ADS.Material = Enum.Material.Neon
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.IronSights["Meshes/PipePistolSights"].Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.Muzzle.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol.Mag.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBody"].Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.PipePistol["Meshes/PipePistolBolt"].Material = Enum.Material.CrackedLava
+                  -----Crossbow
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Arrow.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow["Meshes/Bow"].Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Union.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Body.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.Crossbow.Mover.Material = Enum.Material.CrackedLava
+                  -----Bow
+                  game:GetService("ReplicatedStorage").HandModels.Bow.Arrow.Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.Bow["Meshes/Bow"].Material = Enum.Material.CrackedLava
+                  game:GetService("ReplicatedStorage").HandModels.Bow.Fabric.Material = Enum.Material.CrackedLava
+                end
+                end)
+    end
+            end
+        end
+end
+end
+
+        --// Combat Tab
+        do
+            local AimlockTabBox = Tabs.CombatMiscTab:AddLeftTabbox('Combat')
+            local AimlockTab = AimlockTabBox:AddTab('Aimlock')
+            local GunModsTab = AimlockTabBox:AddTab('Gun Mods')
+
+            do
+                --// Aimlock
+                do
+                    AimlockTab:AddToggle('Aimlock_Toggle', {Text = 'Toggle', Default = false}):AddKeyPicker('Aimlock_Holding', {Default = 'E', SyncToggleState = false, Mode = 'Hold', Text = 'Aimlock', NoUI = false,})
+                    AimlockTab:AddDivider()
+                    AimlockTab:AddToggle('Aimlock_IgnoreTeammates', {Text = 'Team Check', Default = false})
+                    AimlockTab:AddDropdown('Aimlock_TargetPart', {Values = { 'Head', 'HumanoidRootPart' }, Default = 1, Multi = false, Text = 'Target Part'})
+                end
+
+                --// Gun Mods
+                
+local PipePistolDerect = require(game.ReplicatedStorage.ItemConfigs.PipePistol)
+local PipeSMGDerect = require(game.ReplicatedStorage.ItemConfigs.PipeSMG)
+local USPDerect = require(game.ReplicatedStorage.ItemConfigs.USP)
+local HMARDerect = require(game.ReplicatedStorage.ItemConfigs.HMAR)
+local CrossbowDerect = require(game.ReplicatedStorage.ItemConfigs.Crossbow)
+local BowDerect = require(game.ReplicatedStorage.ItemConfigs.Bow)
+local BlunderbussDerect = require(game.ReplicatedStorage.ItemConfigs.Blunderbuss)
+local BowDerect = require(game.ReplicatedStorage.ItemConfigs.Bow)
+local DerectCrossbow = require(game.ReplicatedStorage.ItemConfigs.Crossbow)
+local KatanaDerect = require(game.ReplicatedStorage.ItemConfigs.Katana)
+local HammerDerect = require(game.ReplicatedStorage.ItemConfigs.Hammer)
+    
+GunModsTab:AddSlider('FireRate_Toggle', {Text = 'Custom Firerate',Default = 4500, Min = 100, Max = 5000, Rounding = 0,Compact = false,})
+Options.FireRate_Toggle:OnChanged(function(X)
+    for i,v in pairs(game.ReplicatedStorage.ItemConfigs:GetChildren()) do 
+        
+local code = {
+["attackCooldown"] =X/5000;
+}
+local module=require(v)
+for key, value in pairs(code) do if typeof(value) == "number" then module[key] = value elseif typeof(value) == 'string' then module[key] = value end end
+ 
+USPDerect.fireAction = "auto"
+PipePistolDerect.fireAction = "auto"
+        end
+end)
+
+    do
+local PipePistolDerect = require(game.ReplicatedStorage.ItemConfigs.PipePistol)
+local PipeSMGDerect = require(game.ReplicatedStorage.ItemConfigs.PipeSMG)
+local USPDerect = require(game.ReplicatedStorage.ItemConfigs.USP)
+local HMARDerect = require(game.ReplicatedStorage.ItemConfigs.HMAR)
+local CrossbowDerect = require(game.ReplicatedStorage.ItemConfigs.Crossbow)
+local BowDerect = require(game.ReplicatedStorage.ItemConfigs.Bow)
+local BlunderbussDerect = require(game.ReplicatedStorage.ItemConfigs.Blunderbuss)
+local BowDerect = require(game.ReplicatedStorage.ItemConfigs.Bow)
+local DerectCrossbow = require(game.ReplicatedStorage.ItemConfigs.Crossbow)
+
+GunModsTab:AddToggle('Gnnr', {
+    Text = "No Recoil",
+    Default = false,
+    Tooltip = 'Off gun recoil',
+})
+Toggles.Gnnr:OnChanged(function(T)
+    if T == true then
+        PipePistolDerect.recoilPattern = { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }
+		PipeSMGDerect.recoilPattern = { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }
+		USPDerect.recoilPattern ={ { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }
+		HMARDerect.recoilPattern = { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }
+		USPDerect.anims.fire = ""
+		BowDerect.recoilPattern = { { 0, 0 } } 
+		DerectCrossbow.recoilPattern = { { 0, 0 } }
+    elseif T == false then
+        PipePistolDerect.recoilPattern = { { 0, 1 }, { 0, 1 }, { 1, 1 }, { 1, 1 }, { 2, 1 }, { 2, 1 }, { 2, 1 }, { 1, 1 }, { -1, 1 }, { -1, 1 }, { -1, 1 }, { -2, 1 }, { -2, 1 }, { -1, 1 }, { 0, 1 }, { 0, 1 } }
+		PipeSMGDerect.recoilPattern = { { 0, 0.75 }, { 0.5, 0.75 }, { 0.5, 0.75 }, { -0.5, 0.75 }, { -0.5, 0.75 }, { -0.5, 0.75 }, { 0.3, 0.75 }, { 0.3, 0.75 }, { -0.3, 0.6 }, { -0.3, 0.6 }, { 0.5, 0.6 }, { -0.5, 0.4 }, { -0.5, 0.3 }, { -1, 0.15 }, { -1, 0.05 }, { -1, 0.02 }, { -1, 0.02 }, { -1, 0.02 }, { -1, 0.02 }, { -0.4, 0.1 }, { 0, 0.05 }, { 0, 0.02 }, { 0.1, 0.02 }, { 0.2, 0.02 }, { 0.4, 0.02 }, { 0.5, 0.02 } }
+		USPDerect.recoilPattern = { { 0, 1 }, { 0, 1 }, { 1, 1 }, { 1, 1 }, { 2, 1 }, { 2, 1 }, { 2, 1 }, { 1, 1 }, { -1, 1 }, { -1, 1 }, { -1, 1 }, { -2, 1 }, { -2, 1 }, { -1, 1 }, { 0, 1 }, { 0, 1 } }
+		BowDerect.recoilPattern = { { 0, 1 } }
+		DerectCrossbow.recoilPattern = { { 0, 1 } }
+		HMARDerect.recoilPattern = { { 0, 0.75 }, { 0.5, 0.75 }, { 0.5, 0.75 }, { -0.5, 0.75 }, { -0.5, 0.75 }, { -0.5, 0.75 }, { 0.3, 0.75 }, { 0.3, 0.75 }, { -0.3, 0.6 }, { -0.3, 0.6 }, { 0.5, 0.6 }, { -0.5, 0.4 }, { -0.5, 0.3 }, { -1, 0.15 }, { -1, 0.05 }, { -1, 0.02 }, { -1, 0.02 }, { -1, 0.02 }, { -1, 0.02 }, { -0.4, 0.1 }, { 0, 0.05 }, { 0, 0.02 }, { 0.1, 0.02 }, { 0.2, 0.02 }, { 0.4, 0.02 }, { 0.5, 0.02 } }
+    end
+end)
+
+          local BlunderbussDerect = require(game.ReplicatedStorage.ItemConfigs.Blunderbuss)
+
+          GunModsTab:AddToggle('GunMods_BlunderbussMod', {Text = 'Blunderbuss Mod', Default = false}):OnChanged(function(EOKaPisOp)
+          if EOKaPisOp == true then
+            BlunderbussDerect.accuracy = 999999999
+            BlunderbussDerect.recoilPattern = { { 0, 0 } }
+          elseif EOKaPisOp == false then
+            BlunderbussDerect.accuracy = 1200
+            BlunderbussDerect.recoilPattern = { { 0, 2 } }
+          end
+          end)
+
+          GunModsTab:AddToggle('NoS', {
+            Text = 'No Spread',
+            Default = false,
+            Tooltip = 'No Gun Spread',
+          })
+          Toggles.NoS:OnChanged(function(NoSCA)
+          if NoSCA == true then
+            PipePistolDerect.accuracy = 10000
+            PipeSMGDerect.accuracy = 10000
+            USPDerect.accuracy = 100000
+            HMARDerect.accuracy = 70000
+          elseif NoSCA == false then
+            PipePistolDerect.accuracy = 5000
+            PipeSMGDerect.accuracy = 5000
+            USPDerect.accuracy = 4000
+            HMARDerect.accuracy = 7000
+          end
+          end)
+    end
+            end
+        end
+                
+        --// Player Tab
+        do
+            local CameraTabBox = Tabs.CombatMiscTab:AddRightTabbox('Camera')
+            local CameraModsTab = CameraTabBox:AddTab('Camera')
+            
+            do
+                --Camera Tab
+                do
+                    CameraModsTab:AddToggle('Camera_FOVToggle', {Text = 'Enable Field of View', Default = false})
+                    CameraModsTab:AddSlider('Camera_FOVValue', {Text = 'FOV: ', Default = 70, Min = 0, Max = 120, Rounding = 0, Compact = true})
+            
+                    Toggles.Camera_FOVToggle:OnChanged(function()
+                        if Toggles.Camera_FOVToggle.Value then
+                            camera.FieldOfView = Options.Camera_FOVValue.Value
+                        else
+                            camera.FieldOfView = 70
+                        end
+                    end)
+            
+                    Options.Camera_FOVValue:OnChanged(function()
+                        if Toggles.Camera_FOVToggle.Value then
+                            camera.FieldOfView = Options.Camera_FOVValue.Value
+                        end
+                    end)
+            
+                    CameraModsTab:AddToggle('Camera_ZoomToggle', {Text = 'Enable Zoom', Default = false}):AddKeyPicker('Camera_ZoomHolding', {Default = 'MB2', SyncToggleState = false, Mode = 'Hold', Text = 'Zoom Keybind', NoUI = false,})
+                    CameraModsTab:AddSlider('Camera_ZoomValue', {Text = 'Zoom FOV: ', Default = 30, Min = 0, Max = 120, Rounding = 0, Compact = true})
+            
+                    LPH_JIT_ULTRA(function()
+                        camera:GetPropertyChangedSignal("FieldOfView"):Connect(function()
+                            if Toggles.Camera_FOVToggle.Value then
+                                camera.FieldOfView = Options.Camera_FOVValue.Value
+                            end
+                
+                            if Toggles.Camera_ZoomToggle.Value and Options.Camera_ZoomHolding:GetState() then
+                                camera.FieldOfView = Options.Camera_ZoomValue.Value
+                            end
+                        end)
+                    end)()
+                end
+            end
+        end
+        
+    local CustomHitsoundsTabBox = Tabs.CombatMiscTab:AddLeftTabbox('Custom Hitsounds')
+    local CustomHitsoundsTab = CustomHitsoundsTabBox:AddTab('Custom Hitsounds')
+    local OtherSoundsTab = CustomHitsoundsTabBox:AddTab('Other Sounds')
+
+CustomHitsoundsTab:AddDropdown('HeadshotHit', {
+        Values = { 'Default', 'Gamesense', 'Rust', 'HZ','Bruh', 'Minecraft', 'TF2', 'Osu', },
+        Default = 1,
+        Multi = false,
+        Text = 'Hit Headshot',
+        Tooltip = 'Changes player hit headshot sound',
+      })
+      Options.HeadshotHit:OnChanged(function()
+      if Options.HeadshotHit.Value == "Default" then
+        game:GetService("SoundService").PlayerHitHeadshot.SoundId = "rbxassetid://9114487369"
+        game:GetService("SoundService").PlayerHitHeadshot.Playing = true
+      end
+
+      if Options.HeadshotHit.Value == "Gamesense" then
+        game:GetService("SoundService").PlayerHitHeadshot.SoundId = "rbxassetid://4817809188"
+        game:GetService("SoundService").PlayerHitHeadshot.Playing = true
+      end
+
+      if Options.HeadshotHit.Value == "Rust" then
+        game:GetService("SoundService").PlayerHitHeadshot.SoundId = "rbxassetid://1255040462"
+        game:GetService("SoundService").PlayerHitHeadshot.Playing = true
+      end
+
+      if Options.HeadshotHit.Value == "HZ" then
+        game:GetService("SoundService").PlayerHitHeadshot.SoundId = "rbxassetid://705502934"
+        game:GetService("SoundService").PlayerHitHeadshot.Playing = true
+      end
+
+      if Options.HeadshotHit.Value == "Bruh" then
+        game:GetService("SoundService").PlayerHitHeadshot.SoundId = "rbxassetid://4275842574"
+        game:GetService("SoundService").PlayerHitHeadshot.Playing = true
+      end
+
+      if Options.HeadshotHit.Value == "Minecraft" then
+        game:GetService("SoundService").PlayerHitHeadshot.SoundId = "rbxassetid://4018616850"
+        game:GetService("SoundService").PlayerHitHeadshot.Playing = true
+
+        if Options.HeadshotHit.Value == "TF2" then
+          game:GetService("SoundService").PlayerHitHeadshot.SoundId = "rbxassetid://2868331684"
+          game:GetService("SoundService").PlayerHitHeadshot.Playing = true
+        end
+
+        if Options.HeadshotHit.Value == "Osu" then
+          game:GetService("SoundService").PlayerHitHeadshot.SoundId = "rbxassetid://7149255551"
+          game:GetService("SoundService").PlayerHitHeadshot.Playing = true
+        end
+
+      end
+      end)
+
+      CustomHitsoundsTab:AddDropdown('Hit', {
+        Values = { 'Default', 'Gamesense', 'Rust', 'HZ','Bruh', 'Minecraft', 'TF2', 'Osu', },
+        Default = 1,
+        Multi = false,
+        Text = 'Body Hit',
+        Tooltip = 'Changes player hit sound',
+      })
+      Options.Hit:OnChanged(function()
+      if Options.Hit.Value == "Default" then
+        SoundService.PlayerHit2.SoundId = "rbxassetid://9114487369"
+        SoundService.PlayerHit2.Playing = true
+      end
+
+      if Options.Hit.Value == "Gamesense" then
+        game:GetService("SoundService").PlayerHit2.SoundId = "rbxassetid://4817809188"
+        game:GetService("SoundService").PlayerHit2.Playing = true
+      end
+
+      if Options.Hit.Value == "Rust" then
+        game:GetService("SoundService").PlayerHit2.SoundId = "rbxassetid://1255040462"
+        game:GetService("SoundService").PlayerHit2.Playing = true
+      end
+
+      if Options.Hit.Value == "HZ" then
+        game:GetService("SoundService").PlayerHit2.SoundId = "rbxassetid://705502934"
+        game:GetService("SoundService").PlayerHit2.Playing = true
+      end
+
+      if Options.Hit.Value == "Bruh" then
+        game:GetService("SoundService").PlayerHit2.SoundId = "rbxassetid://4275842574"
+        game:GetService("SoundService").PlayerHit2.Playing = true
+      end
+
+      if Options.Hit.Value == "Minecraft" then
+        game:GetService("SoundService").PlayerHit2.SoundId = "rbxassetid://4018616850"
+        game:GetService("SoundService").PlayerHit2.Playing = true
+      end
+
+      if Options.Hit.Value == "TF2" then
+        game:GetService("SoundService").PlayerHit2.SoundId = "rbxassetid://2868331684"
+        game:GetService("SoundService").PlayerHit2.Playing = true
+      end
+
+      if Options.Hit.Value == "Osu" then
+        game:GetService("SoundService").PlayerHit2.SoundId = "rbxassetid://7149255551"
+        game:GetService("SoundService").PlayerHit2.Playing = true
+      end
+      end)
+
+      CustomHitsoundsTab:AddSlider('CVH', {
+        Text = 'Volume',
+        Default = 1,
+        Min = 0,
+        Max = 5,
+        Rounding = 1,
+        Compact = false,
+      })
+      Options.CVH:OnChanged(function(vol)
+      SoundService.PlayerHitHeadshot.Volume = vol
+      SoundService.PlayerHit2.Volume = vol
+      end)
+
+      CustomHitsoundsTab:AddSlider('CPS', {
+        Text = 'Pitch',
+        Default = 1,
+        Min = 0,
+        Max = 2.5,
+        Rounding = 1,
+        Compact = false,
+      })
+      Options.CPS:OnChanged(function(pich)
+      SoundService.PlayerHitHeadshot.Pitch = pich
+      SoundService.PlayerHit2.Pitch = pich
+      end)
+
+local PlayerModsTabBox = Tabs.CombatMiscTab:AddRightTabbox('Player Mods')
+        local PlayerModsTab = PlayerModsTabBox:AddTab('Player Mods')
+        local GameModsTab = PlayerModsTabBox:AddTab('Game Mods')
+
+        --// Player Mods
+
+      local HedsOn = Instance.new("Part")
+      HedsOn.Name = "HedsOn"
+      HedsOn.Anchored = false
+      HedsOn.CanCollide = false
+      HedsOn.Transparency = 1
+      HedsOn.Size = Vector3.new(4, 7, 3)
+      HedsOn.Parent = game.ReplicatedStorage
+
+      local HTTransparency = 0.8
+      local XSize = 3
+      local YSize = 6
+      local ZSize = 2
+
+      PlayerModsTab:AddToggle('Bht', {
+        Text = 'On/Off',
+        Default = false,
+        Tooltip = 'Makes big player hitboxes'
+      })
+      Toggles.Bht:OnChanged(function(HeadExtends)
+      if HeadExtends == true then
+        while HeadExtends == true do
+          for v, i in pairs(game:GetService("Workspace"):GetChildren()) do
+            if i:FindFirstChild("Humanoid") then
+              if i:FindFirstChild("HumanoidRootPart") then
+                if not i:FindFirstChild("HedsOn") then
+                  if i ~= game.Players.LocalPlayer.Character then
+                    local BigHeadsPart = Instance.new("Part")
+                    BigHeadsPart.Name = "Torso"
+                    BigHeadsPart.Anchored = false
+                    BigHeadsPart.CanCollide = false
+                    BigHeadsPart.Transparency = HTTransparency
+                    BigHeadsPart.Size = Vector3.new(XSize, YSize, ZSize)
+
+                    local HeadsParts = BigHeadsPart:Clone()
+                    HeadsParts.Parent = i
+                    HeadsParts.Orientation = i.HumanoidRootPart.Orientation
+
+                    local HedsOn = HedsOn:Clone()
+                    HedsOn.Parent = i
+
+                    local Headswelding = Instance.new("Weld")
+                    Headswelding.Parent = HeadsParts
+                    Headswelding.Part0 = i.HumanoidRootPart
+                    Headswelding.Part1 = HeadsParts
+
+                    HeadsParts.Position = Vector3.new(i.HumanoidRootPart.Position.X,i.HumanoidRootPart.Position.Y - 0.4, i.HumanoidRootPart.Position.Z)
+                  end
+                end
+              end
+            end
+          end
+          wait(3)
+        end
+      else
+        if HeadExtends == false then
+          for v, i in pairs(game:GetService("Workspace"):GetChildren()) do
+            if i:FindFirstChild("Humanoid") then
+              if i:FindFirstChild("HumanoidRootPart") then
+                if i:FindFirstChild("HedsOn") then
+                  i.HedsOn:Remove()
+                  for x,a in pairs(i:GetChildren()) do
+                    if a.Name == "Torso" then
+                      if not a:FindFirstChild("Nametag") and not a:FindFirstChild("Face") then
+                        a:Remove()
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+      end)
+
+      PlayerModsTab:AddSlider('CHSSS', {
+        Text = 'Transparency',
+        Default = 0.8,
+        Min = 0,
+        Max = 1,
+        Rounding = 1,
+        Compact = false,
+      })
+      Options.CHSSS:OnChanged(function(HT)
+      HTTransparency = HT
+      end)
+
+      PlayerModsTab:AddSlider('BhX', {
+        Text = 'X Size',
+        Default = 3,
+        Min = 0,
+        Max = 10,
+        Rounding = 1,
+        Compact = false,
+      })
+      Options.BhX:OnChanged(function(t)
+      XSize = t
+      end)
+
+      PlayerModsTab:AddSlider('BhY', {
+        Text = 'Y Size',
+        Default = 6,
+        Min = 0,
+        Max = 10,
+        Rounding = 1,
+        Compact = false,
+      })
+      Options.BhY:OnChanged(function(t)
+      YSize = t
+      end)
+
+      PlayerModsTab:AddSlider('BhZ', {
+        Text = 'Z Size',
+        Default = 2,
+        Min = 0,
+        Max = 10,
+        Rounding = 1,
+        Compact = false,
+      })
+      Options.BhZ:OnChanged(function(t)
+      ZSize = t
+      end)
+
+        --// Game Mods
+
+        local Socolo = Instance.new("Sky",game:GetService("Lighting"))
+
+        Socolo.Name = "Custom Skybox"
+        GameModsTab:AddDropdown('SkyC', {
+          Values = { 'Default', 'Sponge Bob', 'Among Us', 'Redshift', 'Aesthetic Night', 'Neptune'},
+          Default = 1,
+          Multi = false,
+
+          Text = 'Custom Skybox',
+          Tooltip = 'Sky Changer',
+        })
+
+        Options.SkyC:OnChanged(function(HOMO)
+        if HOMO == "Default" then
+          Socolo.SkyboxBk = "rbxasset://textures/sky/sky512_bk.tex"
+          Socolo.SkyboxDn = "rbxasset://textures/sky/sky512_dn.tex"
+          Socolo.SkyboxFt = "rbxasset://textures/sky/sky512_ft.tex"
+          Socolo.SkyboxLf = "rbxasset://textures/sky/sky512_lf.tex"
+          Socolo.SkyboxRt = "rbxasset://textures/sky/sky512_rt.tex"
+          Socolo.SkyboxUp = "rbxasset://textures/sky/sky512_up.tex"
+        elseif HOMO == "Sponge Bob" then
+          Socolo.SkyboxBk = "http://www.roblox.com/asset/?id=7633178166"
+          Socolo.SkyboxDn = "http://www.roblox.com/asset/?id=7633178166"
+          Socolo.SkyboxFt = "http://www.roblox.com/asset/?id=7633178166"
+          Socolo.SkyboxLf = "http://www.roblox.com/asset/?id=7633178166"
+          Socolo.SkyboxRt = "http://www.roblox.com/asset/?id=7633178166"
+          Socolo.SkyboxUp = "http://www.roblox.com/asset/?id=7633178166"
+        elseif HOMO == "Among Us" then
+          Socolo.SkyboxBk = "rbxassetid://5752463190"
+          Socolo.SkyboxDn = "rbxassetid://5872485020"
+          Socolo.SkyboxFt = "rbxassetid://5752463190"
+          Socolo.SkyboxLf = "rbxassetid://5752463190"
+          Socolo.SkyboxRt = "rbxassetid://5752463190"
+          Socolo.SkyboxUp = "rbxassetid://5752463190"
+        elseif HOMO == "Redshift" then
+          Socolo.SkyboxBk = "rbxassetid://401664839"
+          Socolo.SkyboxDn = "rbxassetid://401664862"
+          Socolo.SkyboxFt = "rbxassetid://401664960"
+          Socolo.SkyboxLf = "rbxassetid://401664881"
+          Socolo.SkyboxRt = "rbxassetid://401664901"
+          Socolo.SkyboxUp = "rbxassetid://401664936"
+        elseif HOMO == "Aesthetic Night" then
+          Socolo.SkyboxBk = "rbxassetid://1045964490"
+          Socolo.SkyboxDn = "rbxassetid://1045964368"
+          Socolo.SkyboxFt = "rbxassetid://1045964655"
+          Socolo.SkyboxLf = "rbxassetid://1045964655"
+          Socolo.SkyboxRt = "rbxassetid://1045964655"
+          Socolo.SkyboxUp = "rbxassetid://1045962969"
+        elseif HOMO == "Neptune" then
+          Socolo.SkyboxBk = "rbxassetid://218955819"
+          Socolo.SkyboxDn = "rbxassetid://218953419"
+          Socolo.SkyboxFt = "rbxassetid://218954524"
+          Socolo.SkyboxLf = "rbxassetid://218958493"
+          Socolo.SkyboxRt = "rbxassetid://218957134"
+          Socolo.SkyboxUp = "rbxassetid://218950090"
+        end
+        end)
+
+        GameModsTab:AddLabel('Loot All'):AddKeyPicker('gakb', {
+          Default = 'F',
+          SyncToggleState = false,
+          Mode = 'Toggle',
+          Text = 'Loot All',
+          NoUI = false,
+        })
+        Options.gakb:OnClick(function()
+        game:GetService("ReplicatedStorage").e:FireServer(106, 1,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 2,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 3,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 4,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 5,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 6,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 7,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 8,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 9,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 10,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 11,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 12,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 13,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 14,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 15,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 16,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 17,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 18,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 19,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 20,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 21,true)
+        game:GetService("ReplicatedStorage").e:FireServer(106, 22,true)
+        end)
+
+--// Functionality, Main Loop, Functions
+LPH_JIT_ULTRA(function()
+    utility.functions.closest_to_mouse = function(type)
+        local target = nil
+        local maxDist = math_huge
+
+        for _,v in ipairs(utility.services.players:GetPlayers()) do
+            if v ~= localplayer and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("Head") then
+                local pos, onScreen
+                if type == "aimbot" then
+                    pos, onScreen = camera:WorldToViewportPoint(v.Character[Options.Aimlock_TargetPart.Value].Position)
+
+                    if onScreen then
+                        local dist = (vector2_new(pos.X, pos.Y - getguiinset(utility.services.guiservice).Y) - vector2_new(mouse.X, mouse.Y)).Magnitude
+                        if dist <= maxDist then
+                            if Toggles.FOVCircle_Toggle.Value then
+                                if Toggles.Aimlock_IgnoreTeammates.Value then
+                                    if dist < Options.FOVCircle_Radius.Value and localplayer.TeamColor ~= v.TeamColor then
+                                        maxDist = dist
+                                        target = v
+                                    end
+                                else
+                                    if dist < Options.FOVCircle_Radius.Value then
+                                        maxDist = dist
+                                        target = v
+                                    end
+                                end
+                            else
+                                if Toggles.Aimlock_IgnoreTeammates.Value then
+                                    if dist <= maxDist and localplayer.TeamColor ~= v.TeamColor then
+                                        maxDist = dist
+                                        target = v
+                                    end
+                                else
+                                    if dist <= maxDist then
+                                        maxDist = dist 
+                                        target = v 
+                                    end
+                                end
+                            end
+                        end
+                    end     
+                elseif type == "snapline" then
+                    pos, onScreen = camera:WorldToViewportPoint(v.Character[Options.Snapline_TargetPart.Value].Position)
+
+                    if onScreen then
+                        local dist = (vector2_new(pos.X, pos.Y - getguiinset(utility.services.guiservice).Y) - vector2_new(mouse.X, mouse.Y)).Magnitude
+                        if dist <= maxDist then
+                            maxDist = dist 
+                            target = v 
+                        end
+                    end
+                end
+            end
+        end
+        return target
+    end
+
+    do
+        utility.services.runservice.RenderStepped:Connect(function()
+            if utility.functions.closest_to_mouse("aimbot") ~= nil and Toggles.Aimlock_Toggle.Value and Options.Aimlock_Holding:GetState() then 
+                local Vector, onScreen = camera:WorldToViewportPoint(utility.functions.closest_to_mouse("aimbot").Character[Options.Aimlock_TargetPart.Value].Position)
+                mousemoverel((Vector.X - utility.services.userinputservice:GetMouseLocation().X), (Vector.Y - utility.services.userinputservice:GetMouseLocation().Y))
+            end
+
+            if Toggles.Snapline_Toggle.Value then
+                local ClosestPlayer = utility.functions.closest_to_mouse("snapline")
+
+                if ClosestPlayer ~= nil and ClosestPlayer.Character and ClosestPlayer.Character:FindFirstChild("HumanoidRootPart") and ClosestPlayer.Character:FindFirstChild("Head") then
+                    local snapVector, snapOnScreen = camera:WorldToViewportPoint(ClosestPlayer.Character[Options.Snapline_TargetPart.Value].Position)
+                    if snapOnScreen then
+                        Snapline_Object.From = vector2_new(utility.services.userinputservice:GetMouseLocation().X, utility.services.userinputservice:GetMouseLocation().Y)
+                        Snapline_Object.To = vector2_new(snapVector.X, snapVector.Y)
+                        Snapline_Object.Visible = true
+                    else
+                        Snapline_Object.Visible = false
+                    end
+                else
+                    Snapline_Object.Visible = false
+                end
+            else
+                Snapline_Object.Visible = false
+            end
+
+            if Toggles.Camera_ZoomToggle.Value and Options.Camera_ZoomHolding:GetState() then
+                camera.FieldOfView = Options.Camera_ZoomValue.Value
+            elseif Toggles.Camera_FOVToggle.Value then
+                camera.FieldOfView = Options.Camera_FOVValue.Value
+            else
+                camera.FieldOfView = 70
+            end
+        end)
+    end
+end)()
+
+local __namecall; __namecall = hookmetamethod(game, "__namecall", function(self, ...)
+    local args = {...}
+
+    return __namecall(self, ...)
+end)
+
+        --// Menu Window & Config List
+
+        Library:OnUnload(function()
+        esp.Unload()
+
+        for i,v in pairs(Toggles) do
+          v.Value = false
+        end
+
+        Library.Unloaded = true
+        end)
+
+        local MenuGroup = Tabs.UISettings:AddRightGroupbox('Menu')
+
+        MenuGroup:AddLabel(game:GetService("Players").LocalPlayer.PlayerGui.UI.ServerInfo.Text)
+        MenuGroup:AddLabel('Made By:\n👑 Burn Hub', true)
+
+        MenuGroup:AddButton('Unload Script', function() Library:Unload() end)
+
+        MenuGroup:AddButton('Panic Button', function()
+        for i,v in pairs(Toggles) do
+          v:SetValue(false)
+        end
+        end)
+
+        MenuGroup:AddButton('Copy Discord', function()
+        setclipboard(("https://discord.gg/a5G7NY5Y"):format(game.PlaceId, game.JobId))
+        end)
+
+        MenuGroup:AddDivider()
+
+        MenuGroup:AddToggle('WatermarkToggle', {Text = 'Watermark', Default = true, Tooltip = nil, })
+
+        MenuGroup:AddToggle('UISettings_KeybindFrameVisibility', {Text = 'Show Keybind Frame', Default = true}):OnChanged(function()
+        Library.KeybindFrame.Visible = Toggles.UISettings_KeybindFrameVisibility.Value
+        end)
+
+        MenuGroup:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'RightControl', NoUI = true, Text = 'Menu keybind' })
+        Library.ToggleKeybind = Options.MenuKeybind
+        SaveManager:SetLibrary(Library)
+        SaveManager:SetFolder('Oblivity/Trident')
+        SaveManager:BuildConfigSection(Tabs.UISettings)
+
+        --// Theme Editor
+
+        ThemeManager:SetLibrary(Library)
+        SaveManager:IgnoreThemeSettings()
+        ThemeManager:SetFolder('Oblivity/Trident/Themes')
+        ThemeManager:ApplyToTab(Tabs.UISettings)
+
+        Toggles.WatermarkToggle:OnChanged(function()
+        while Toggles.WatermarkToggle.Value do task.wait() Library:SetWatermark('🔥 Burn Hub 🔥 | FPS '.. game.Stats.Workspace.Heartbeat:GetValueString() .. ' | Ping ' .. game.Stats.Network.ServerStatsItem["Data Ping"]:GetValueString()) Library:SetWatermarkVisibility(Toggles.WatermarkToggle.Value) end end)
+          Library:SetWatermarkVisibility(false)
+
+          --Wrapping function - needed to unload(Keep at end of script)
+          loadstring(game:HttpGet('https://raw.githubusercontent.com/EIOlmqV6v1owgJBEoqj5lK9p01SFE2THpxcOnvX/LinoriaBurnEdition/main/LoaderManager.lua'))()
